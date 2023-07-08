@@ -1,0 +1,20 @@
+## A Black Jack Break Down
+
+- [ ] Tables usually hold 2-7 players max.
+
+- [ ] As betting rules dictate, players must add their wages to the table 
+before the game starts.
+
+- [ ] Starting from their left, the dealr gives one upcard to each player and 
+themselves.
+
+- [ ] The dealer deals a second upcard to everyone, finishing with one facedown
+for themselves.
+
+- [ ] When it's your tunr, look at your card values and firure out your next 
+move.
+
+- [ ] Once you're happy with your hand, stand to end your turn.
+
+- After everyplayer has finished their turn, watch the dealer play out their 
+hand.
