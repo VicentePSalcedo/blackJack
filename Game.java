@@ -15,37 +15,28 @@ public class Game{
 }
 
 class Shoe{
-    private Deck decks[];
+    Card cards[] = new Card[312];
+    public Shoe(){
+        for(int i = 0; i < cards.length; i++);
+    }
 }
-class Deck{
-    private Card cards[];
-}
+
 class Card{
-    private Suit suit;
-    private Rank rank;
+    Suit suit;
+    Rank rank;
     public Card(Suit suit, Rank rank){
         this.suit = suit;
         this.rank = rank;
     }
-    public Suit getSuit(){
-        return suit;
-    }
-    public void setSuit(Suit suit){
-        this.suit = suit;
-    }
-    public Rank getRank(){
-        return rank;
-    }
-    public void setRank(Rank rank){
-        this.rank = rank;
-    }
 }
+
 enum Suit {
     SPADES,
     HEARTS,
     DIAMONS,
     CLUBS;
 }
+
 enum Rank {
     TWO,
     THREE,
