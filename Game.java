@@ -1,48 +1,15 @@
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Game{
-    static Player player = new Player();
     public static void main(String[] args){
-
-        Shoe shoe = new Shoe();
-        Dealer dealer = new Dealer();
-
+        ArrayList<ArrayList<Card>> = new ArrayList<>();
         System.out.println("Welcome to BlackJack.");
         //Game setup by the player
         System.out.println("How big a bankroll do you have today?");
-        Scanner userIn = new Scanner(System.in);
-        player.setBankroll(userIn.nextInt());
-        printBankRoll();
-    }
-    public void hit(){
-    }
-    public static void printBankRoll(){
-        NumberFormat dollar = NumberFormat.getCurrencyInstance(Locale.US);
-        String bankString = dollar.format(player.getBankroll());
-        System.out.println(bankString);
+
     }
 }
-
-class Dealer{
-    ArrayList<Card> hand = new ArrayList<Card>();
-}
-
-class Player{
-    private int bankroll;
-    int currentBet;
-    ArrayList<Card> hand = new ArrayList<Card>();
-    public void setBankroll(int userIn){
-        this.bankroll = userIn;
-    }
-    public int getBankroll(){
-        return this.bankroll;
-    }
-}
-
 class Shoe{
     Card cards[] = new Card[312];
     int totalCards = 312;
