@@ -1,23 +1,25 @@
 public class Game{
     public static void main(String[] args){
-        int[] deck = new int[52];
-        for(int i = 0; i < 52; i++){
-            deck[i] = (i + 1);
-        }
-        printWholeDeck(deck, 52);
+        Shoe shoe = new Shoe();
     }
 
-    public static void printWholeDeck(int[] deck, int deckSize){
-       for(int i = 0; i < deckSize; i++){
-           System.out.println(deck[i]);
-       }
-    }
 }
 
 class Shoe{
     Card cards[] = new Card[312];
     public Shoe(){
-        for(int i = 0; i < cards.length; i++);
+        int decks = 0;
+        int cardCount = 0;
+        while(decks < 6){
+            for(Suit suit : Suit.values()){
+                for(Rank rank : Rank.values()){
+                    Card card = new Card(suit, rank);
+                    cards[cardCount] = card;
+                    cardCount++;
+                } 
+            }
+            decks++;
+        }
     }
 }
 
@@ -31,24 +33,24 @@ class Card{
 }
 
 enum Suit {
-    SPADES,
-    HEARTS,
-    DIAMONS,
-    CLUBS;
+    Spades,
+    Hearts,
+    Diamnos,
+    Clubs;
 }
 
 enum Rank {
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
-    SEVEN,
-    EIGHT,
-    NINE,
-    TEN,
-    JACK,
-    QUEEN,
-    KING,
-    ACE;
+    Ace,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+    Nine,
+    Ten,
+    Jack,
+    Queen,
+    King;
 }
