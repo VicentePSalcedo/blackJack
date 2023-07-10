@@ -3,11 +3,29 @@ import java.util.Random;
 
 public class Game{
     public static void main(String[] args){
-        ArrayList<ArrayList<Card>> = new ArrayList<>();
+        Shoe shoe = new Shoe();
+        ArrayList<Card> dealer = new ArrayList<>();
+        Player player = new Player();
         System.out.println("Welcome to BlackJack.");
-        //Game setup by the player
-        System.out.println("How big a bankroll do you have today?");
 
+        //Game setup by the player
+        System.out.println("Your hand:");
+        System.out.println(player.splits);
+    }
+}
+class Player{
+    ArrayList<ArrayList<Card>> splits = new ArrayList<>(4);
+    public Player(){
+        ArrayList<Card> hand = new ArrayList<>();
+        this.splits.add(hand);
+    }
+    public void split(){
+        try{
+            ArrayList<Card> hand = new ArrayList<>();
+            this.splits.add(hand);
+        } catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("You are at the max number of splits for this casino");
+        }
     }
 }
 class Shoe{
