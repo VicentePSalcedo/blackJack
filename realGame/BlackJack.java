@@ -3,18 +3,19 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class BlackJack{
-    public static void main(String[] args){
+public class BlackJack {
+    public static void main(String[] args) {
         System.out.println("Welcome to BlackJack.");
         Game game = new Game();
-        while(!game.IsComplete()){
+        while (!game.IsComplete()) {
             game.run();
         }
         System.out.println("See ya next time!");
     }
 }
-class Game{
-    enum State{
+
+class Game {
+    enum State {
         WAGERING,
         DEALING,
         PLAYERTURN,
@@ -25,12 +26,14 @@ class Game{
         ATM,
         QUIT;
     }
+
     State state;
     Shoe shoe;
     ArrayList<Card> player;
     ArrayList<Card> dealer;
     int bankRoll, bet;
-    public Game(){
+
+    public Game() {
         this.shoe = new Shoe();
         this.player = new ArrayList<Card>();
         this.dealer = new ArrayList<Card>();
@@ -38,18 +41,19 @@ class Game{
         this.bet = 0;
         this.state = State.WAGERING;
     }
-    public void run(){
-        switch(state){
+
+    public void run() {
+        Scanner userInput = new Scanner(System.in);
+        switch (state) {
             case WAGERING:
-                Scanner userInput = new Scanner(System.in);
                 do {
-                    System.out.println("How much would you like to wager?[Min:$10-Max:$" + bankRoll + "]");
-                    while(!userInput.hasNextInt()){
+                    System.out.print("How much would you like to wager?[Min:$10-Max:$" + bankRoll + "]\n\t$");
+                    while (!userInput.hasNextInt()) {
                         System.out.println("Please enter a positive integer less than $" + bankRoll);
                         userInput.next();
                     }
                     bet = userInput.nextInt();
-                } while ((bet < 10 || bet > bankRoll) || (bet%10) != 0);
+                } while ((bet < 10 || bet > bankRoll) || (bet % 10) != 0);
                 System.out.println("You bet $" + bet + ".");
                 state = State.DEALING;
                 break;
@@ -61,73 +65,89 @@ class Game{
                 state = State.PLAYERTURN;
                 break;
             case PLAYERTURN:
-                printHand(player);
-                System.out.println("PlaterTurn State isn't working yet. Quitint out.");
+                System.out.println("Dealer:");
+                printHand(dealer, 1);
+                System.out.println("Player:");
+                printHand(player, 0);
+                System.out.print("Hit or Stand?[h/s]:");
+                System.out.println("PlayerTurn State isn't working yet. Quiting out.");
                 state = State.QUIT;
                 break;
             case DEALERTURN:
-                System.out.println("DealerTunr State isn't working yet. Quitint out.");
+                System.out.println("DealerTunr State isn't working yet. Quiting out.");
                 state = State.QUIT;
                 break;
             case LOSS:
-                System.out.println("Loss State isn't working yet. Quitint out.");
+                System.out.println("Loss State isn't working yet. Quiting out.");
                 state = State.QUIT;
                 break;
             case PUSH:
-                System.out.println("Push State isn't working yet. Quitint out.");
+                System.out.println("Push State isn't working yet. Quiting out.");
                 state = State.QUIT;
                 break;
             case WIN:
-                System.out.println("Win State isn't working yet. Quitint out.");
+                System.out.println("Win State isn't working yet. Quiting out.");
                 state = State.QUIT;
                 break;
             case ATM:
-                System.out.println("Atm State isn't isn't working yet. Quitint out.");
+                System.out.println("Atm State isn't isn't working yet. Quiting out.");
                 state = State.QUIT;
                 break;
             case QUIT:
                 break;
         }
     }
-    public void printHand(ArrayList<Card> hand){
-        for(Card card : hand){
-            System.out.println(card.rank + " of " + card.suit);
+
+    public void printHand(ArrayList<Card> hand, int dealer) {
+        if (dealer == 0) {
+            for (Card card : hand) {
+                System.out.println(card.rank + " of " + card.suit);
+            }
+        }
+        if (dealer == 1) {
+            System.out.println(hand.get(0).rank + " of " + hand.get(0).suit);
         }
     }
-    public void hitPlayer(){
+
+    public void hitPlayer() {
         player.add(shoe.cards[shoe.topOfDeck]);
         shoe.topOfDeck--;
     }
-    public void hitDealer(){
+
+    public void hitDealer() {
         dealer.add(shoe.cards[shoe.topOfDeck]);
         shoe.topOfDeck--;
     }
-    public boolean IsComplete(){
+
+    public boolean IsComplete() {
         return this.state == State.QUIT;
     }
 }
-//we store the cards this way so that people can count cards in this game
-class Shoe{
+
+// we store the cards this way so that people can count cards in this game
+class Shoe {
     Card cards[] = new Card[312];
     int topOfDeck;
-    public Shoe(){
+
+    public Shoe() {
         int decks = 0;
         int cardCount = 0;
-        while(decks < 6){
-            for(Card.Suit suit : Card.Suit.values()){
-                for(Card.Rank rank : Card.Rank.values()){
+        while (decks < 6) {
+            for (Card.Suit suit : Card.Suit.values()) {
+                for (Card.Rank rank : Card.Rank.values()) {
                     Card card = new Card(suit, rank);
                     this.cards[cardCount] = card;
                     cardCount++;
-                } 
+                }
             }
             decks++;
         }
         shuffle();
     }
-    public void shuffle(){
+
+    public void shuffle() {
         Random rand = new Random();
-        for(int i = 0; i < this.cards.length; i++){
+        for (int i = 0; i < this.cards.length; i++) {
             int randomIndexToSwap = rand.nextInt(this.cards.length);
             Card temp = this.cards[randomIndexToSwap];
             this.cards[randomIndexToSwap] = this.cards[i];
@@ -135,8 +155,9 @@ class Shoe{
         }
         this.topOfDeck = 311;
     }
-    public void printShoe(){
-        for(Card card : this.cards){
+
+    public void printShoe() {
+        for (Card card : this.cards) {
             System.out.println(card.rank + " of " + card.suit);
         }
     }
