@@ -1,33 +1,30 @@
+package realGame;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game{
+public class BlackJack{
     public static void main(String[] args){
-        Shoe shoe = new Shoe();
-        ArrayList<Card> dealer = new ArrayList<>();
-        Player player = new Player();
         System.out.println("Welcome to BlackJack.");
-
-        //Game setup by the player
-        System.out.println("Your hand:");
-        System.out.println(player.splits);
+        Game game = new Game();
+        game.run();
     }
 }
-class Player{
-    ArrayList<ArrayList<Card>> splits = new ArrayList<>(4);
-    public Player(){
-        ArrayList<Card> hand = new ArrayList<>();
-        this.splits.add(hand);
+class Game{
+    Shoe shoe;
+    ArrayList<Card> player;
+    ArrayList<Card> dealer;
+    int bankdRoll;
+    public Game(){
+        this.shoe = new Shoe();
+        this.player = new ArrayList<Card>();
+        this.dealer = new ArrayList<Card>();
+        this.bankdRoll = 5000;
     }
-    public void split(){
-        try{
-            ArrayList<Card> hand = new ArrayList<>();
-            this.splits.add(hand);
-        } catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("You are at the max number of splits for this casino");
-        }
+    public void run(){
+        
     }
 }
+//we store the cards this way so that people can count cards in this game
 class Shoe{
     Card cards[] = new Card[312];
     int totalCards = 312;
@@ -35,8 +32,8 @@ class Shoe{
         int decks = 0;
         int cardCount = 0;
         while(decks < 6){
-            for(Suit suit : Suit.values()){
-                for(Rank rank : Rank.values()){
+            for(Card.Suit suit : Card.Suit.values()){
+                for(Card.Rank rank : Card.Rank.values()){
                     Card card = new Card(suit, rank);
                     this.cards[cardCount] = card;
                     cardCount++;
@@ -69,27 +66,25 @@ class Card{
         this.suit = suit;
         this.rank = rank;
     }
-}
-
-enum Suit {
-    Spades,
-    Hearts,
-    Diamnos,
-    Clubs;
-}
-
-enum Rank {
-    Ace,
-    Two,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten,
-    Jack,
-    Queen,
-    King;
+    public enum Suit {
+        Spades,
+        Hearts,
+        Diamnos,
+        Clubs;
+    }
+    public enum Rank {
+        Ace,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Ten,
+        Jack,
+        Queen,
+        King;
+    }
 }
