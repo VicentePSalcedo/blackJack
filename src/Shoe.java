@@ -30,6 +30,7 @@ public class Shoe {
         }
         this.topOfDeck = 311;
     }
+    // This method is here to test the deck generation and serves no gameplay purpose
     public void printShoe() {
         for (Card card : this.cards) {
             System.out.println(card.rank + " of " + card.suit);

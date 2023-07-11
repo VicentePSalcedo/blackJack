@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
+    //how we keep track of the game state
     public enum State {
         WAGERING,
         DEALING,
@@ -15,7 +16,6 @@ public class Game {
         ATM,
         QUIT;
     }
-
     State state;
     Shoe shoe;
     ArrayList<Card> player;
@@ -30,7 +30,7 @@ public class Game {
         this.bet = 0;
         this.state = State.WAGERING;
     }
-
+    //the game engine
     public void run() {
         Scanner userInput = new Scanner(System.in);
         switch (state) {
@@ -63,7 +63,7 @@ public class Game {
                 state = State.QUIT;
                 break;
             case DEALERTURN:
-                System.out.println("DealerTunr State isn't working yet. Quiting out.");
+                System.out.println("DealerTurn State isn't working yet. Quiting out.");
                 state = State.QUIT;
                 break;
             case LOSS:
