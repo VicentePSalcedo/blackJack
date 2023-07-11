@@ -1,21 +1,10 @@
-package realGame;
+package src;
+
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
-public class BlackJack {
-    public static void main(String[] args) {
-        System.out.println("Welcome to BlackJack.");
-        Game game = new Game();
-        while (!game.IsComplete()) {
-            game.run();
-        }
-        System.out.println("See ya next time!");
-    }
-}
-
-class Game {
-    enum State {
+public class Game {
+    public enum State {
         WAGERING,
         DEALING,
         PLAYERTURN,
@@ -96,6 +85,7 @@ class Game {
             case QUIT:
                 break;
         }
+        userInput.close();
     }
 
     public void printHand(ArrayList<Card> hand, int dealer) {
@@ -121,74 +111,5 @@ class Game {
 
     public boolean IsComplete() {
         return this.state == State.QUIT;
-    }
-}
-
-// we store the cards this way so that people can count cards in this game
-class Shoe {
-    Card cards[] = new Card[312];
-    int topOfDeck;
-
-    public Shoe() {
-        int decks = 0;
-        int cardCount = 0;
-        while (decks < 6) {
-            for (Card.Suit suit : Card.Suit.values()) {
-                for (Card.Rank rank : Card.Rank.values()) {
-                    Card card = new Card(suit, rank);
-                    this.cards[cardCount] = card;
-                    cardCount++;
-                }
-            }
-            decks++;
-        }
-        shuffle();
-    }
-
-    public void shuffle() {
-        Random rand = new Random();
-        for (int i = 0; i < this.cards.length; i++) {
-            int randomIndexToSwap = rand.nextInt(this.cards.length);
-            Card temp = this.cards[randomIndexToSwap];
-            this.cards[randomIndexToSwap] = this.cards[i];
-            this.cards[i] = temp;
-        }
-        this.topOfDeck = 311;
-    }
-
-    public void printShoe() {
-        for (Card card : this.cards) {
-            System.out.println(card.rank + " of " + card.suit);
-        }
-    }
-}
-
-class Card{
-    Suit suit;
-    Rank rank;
-    public Card(Suit suit, Rank rank){
-        this.suit = suit;
-        this.rank = rank;
-    }
-    public enum Suit {
-        Spades,
-        Hearts,
-        Diamnos,
-        Clubs;
-    }
-    public enum Rank {
-        Ace,
-        Two,
-        Three,
-        Four,
-        Five,
-        Six,
-        Seven,
-        Eight,
-        Nine,
-        Ten,
-        Jack,
-        Queen,
-        King;
     }
 }
