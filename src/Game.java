@@ -78,9 +78,9 @@ public class Game {
                 break;
             case PLAYERTURN:
                 System.out.println("Dealer:");
-                printHand(dealer, 1);
+                printHand(dealer, true);
                 System.out.println("Player:");
-                printHand(player, 0);
+                printHand(player, false);
                 System.out.print("Hit or Stand?[h/s]:");
                 System.out.println("PlayerTurn State isn't working yet. Quiting out.");
                 state = State.QUIT;
@@ -111,13 +111,13 @@ public class Game {
         userInput.close();
     }
 
-    public void printHand(ArrayList<Card> hand, int dealer) {
-        if (dealer == 0) {
+    public void printHand(ArrayList<Card> hand, boolean dealer) {
+        if (dealer == false) {
             for (Card card : hand) {
-                System.out.println(card.rank + " of " + card.suit);
+                System.out.println(card.rank + " of " + card.suit + " : " + card.rankInt);
             }
         }
-        if (dealer == 1) {
+        if (dealer == true) {
             System.out.println(hand.get(0).rank + " of " + hand.get(0).suit);
         }
     }
