@@ -45,7 +45,7 @@ public class Game {
             }else if(card.rank == Rank.Ace){
                 score += 11;
             }else{
-                // I found out that you have the word numbers instead of the number numbers >:[
+                score += card.rankInt;
             }
         }
 
