@@ -11,12 +11,14 @@ public class Shoe {
         int rankCount;
         while (decks < 6) {
             for (Card.Suit suit : Card.Suit.values()) {
-                rankCount = 1;      
+                rankCount = 1;
                 for (Card.Rank rank : Card.Rank.values()) {
-                    Card card = new Card(suit, rank, rankCount);
+                    Card card = new Card(suit, rank, rank != Card.Rank.Ace ? rankCount : 0);
                     this.cards[cardCount] = card;
                     cardCount++;
-                    rankCount++;
+                    if (rankCount <10){
+                        rankCount++;
+                    }
                 }
             }
             decks++;
