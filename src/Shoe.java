@@ -8,12 +8,17 @@ public class Shoe {
     public Shoe() {
         int decks = 0;
         int cardCount = 0;
+        int rankCount;
         while (decks < 6) {
             for (Card.Suit suit : Card.Suit.values()) {
+                rankCount = 1;
                 for (Card.Rank rank : Card.Rank.values()) {
-                    Card card = new Card(suit, rank);
+                    Card card = new Card(suit, rank, rank != Card.Rank.Ace ? rankCount : 0);
                     this.cards[cardCount] = card;
                     cardCount++;
+                    if (rankCount <10){
+                        rankCount++;
+                    }
                 }
             }
             decks++;
@@ -33,7 +38,7 @@ public class Shoe {
     // This method is here to test the deck generation and serves no gameplay purpose
     public void printShoe() {
         for (Card card : this.cards) {
-            System.out.println(card.rank + " of " + card.suit);
+            System.out.println(card.rank + " of " + card.suit + " : " + card.rankInt);
         }
     }
 }

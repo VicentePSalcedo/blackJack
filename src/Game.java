@@ -3,6 +3,8 @@ package src;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import src.Card.Rank;
+
 public class Game {
     //how we keep track of the game state
     public enum State {
@@ -20,9 +22,13 @@ public class Game {
     Shoe shoe;
     ArrayList<Card> player;
     ArrayList<Card> dealer;
-    int bankRoll, bet;
+    int bankRoll, bet, playerScore, dealerScore;
 
     public Game() {
+
+        this.playerScore = 0;
+        this.dealerScore = 0;
+
         this.shoe = new Shoe();
         this.player = new ArrayList<Card>();
         this.dealer = new ArrayList<Card>();
@@ -30,13 +36,28 @@ public class Game {
         this.bet = 0;
         this.state = State.WAGERING;
     }
+
+    public void calculateHand(boolean isPlayer, ArrayList<Card> hand){
+        int score = 0;
+        for(Card card : hand){
+            if(card.rank == Rank.Queen || card.rank == Rank.King || card.rank == Rank.Jack){
+                score += 10;
+            }else if(card.rank == Rank.Ace){
+                score += 11;
+            }else{
+                score += card.rankInt;
+            }
+        }
+
+    }
+
     //the game engine
     public void run() {
         Scanner userInput = new Scanner(System.in);
         switch (state) {
             case WAGERING:
                 do {
-                    System.out.print("How much would you like to wager?[Min:$10-Max:$" + bankRoll + "]\n\t$");
+                    System.out.print("How much would you like to wager?[$10 - $" + bankRoll + "]\n\t$");
                     while (!userInput.hasNextInt()) {
                         System.out.println("Please enter a positive integer less than $" + bankRoll);
                         userInput.next();
@@ -47,17 +68,19 @@ public class Game {
                 state = State.DEALING;
                 break;
             case DEALING:
-                hitPlayer();
-                hitDealer();
-                hitPlayer();
-                hitDealer();
+                hit(player);
+                hit(player);
+
+                hit(dealer);
+                hit(dealer);
+                
                 state = State.PLAYERTURN;
                 break;
             case PLAYERTURN:
                 System.out.println("Dealer:");
-                printHand(dealer, 1);
+                printHand(dealer, true);
                 System.out.println("Player:");
-                printHand(player, 0);
+                printHand(player, false);
                 System.out.print("Hit or Stand?[h/s]:");
                 System.out.println("PlayerTurn State isn't working yet. Quiting out.");
                 state = State.QUIT;
@@ -88,24 +111,19 @@ public class Game {
         userInput.close();
     }
 
-    public void printHand(ArrayList<Card> hand, int dealer) {
-        if (dealer == 0) {
+    public void printHand(ArrayList<Card> hand, boolean dealer) {
+        if (dealer == false) {
             for (Card card : hand) {
-                System.out.println(card.rank + " of " + card.suit);
+                System.out.println(card.rank + " of " + card.suit + " : " + card.rankInt);
             }
         }
-        if (dealer == 1) {
+        if (dealer == true) {
             System.out.println(hand.get(0).rank + " of " + hand.get(0).suit);
         }
     }
 
-    public void hitPlayer() {
-        player.add(shoe.cards[shoe.topOfDeck]);
-        shoe.topOfDeck--;
-    }
-
-    public void hitDealer() {
-        dealer.add(shoe.cards[shoe.topOfDeck]);
+    public void hit(ArrayList<Card> hand){
+        hand.add(shoe.cards[shoe.topOfDeck]);
         shoe.topOfDeck--;
     }
 

@@ -3,14 +3,16 @@ package src;
 public class Card {
     Suit suit;
     Rank rank;
-    public Card(Suit suit, Rank rank){
+    int rankInt;
+    public Card(Suit suit, Rank rank, int rankInt){
         this.suit = suit;
         this.rank = rank;
+        this.rankInt = rankInt;
     }
     public enum Suit {
         Spades,
         Hearts,
-        Diamnos,
+        Diamond,
         Clubs;
     }
     public enum Rank {
