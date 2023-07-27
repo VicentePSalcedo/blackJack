@@ -68,62 +68,64 @@ public class Game {
 
     //the game engine
     public void run() {
-        Scanner userInput = new Scanner(System.in);
-        switch (state) {
-            case WAGERING:
-                do {
-                    System.out.print("How much would you like to wager?[$10 - $" + bankRoll + "]\n\t$");
-                    while (!userInput.hasNextInt()) {
-                        System.out.println("Please enter a positive integer less than $" + bankRoll);
-                        userInput.next();
-                    }
-                    bet = userInput.nextInt();
-                } while ((bet < 10 || bet > bankRoll) || (bet % 10) != 0);
-                System.out.println("You bet $" + bet + ".");
-                state = State.DEALING;
-                break;
-            case DEALING:
-                hit(player);
-                hit(player);
-
-                hit(dealer);
-                hit(dealer);
-                
-                state = State.PLAYERTURN;
-                break;
-            case PLAYERTURN:
-                System.out.println("Dealer:");
-                printHand(dealer, true);
-                System.out.println("Player:");
-                printHand(player, false);
-                System.out.print("Hit or Stand?[h/s]:");
-                System.out.println("PlayerTurn State isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
-            case DEALERTURN:
-                System.out.println("DealerTurn State isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
-            case LOSS:
-                System.out.println("Loss State isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
-            case PUSH:
-                System.out.println("Push State isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
-            case WIN:
-                System.out.println("Win State isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
-            case ATM:
-                System.out.println("Atm State isn't isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
-            case QUIT:
-                break;
+        while(!IsComplete()){
+            Scanner userInput = new Scanner(System.in);
+            switch (state) {
+                case WAGERING:
+                    do {
+                        System.out.print("How much would you like to wager?[$10 - $" + bankRoll + "]\n\t$");
+                        while (!userInput.hasNextInt()) {
+                            System.out.println("Please enter a positive integer less than $" + bankRoll);
+                            userInput.next();
+                        }
+                        bet = userInput.nextInt();
+                    } while ((bet < 10 || bet > bankRoll) || (bet % 10) != 0);
+                    System.out.println("You bet $" + bet + ".");
+                    state = State.DEALING;
+                    break;
+                case DEALING:
+                    hit(player);
+                    hit(player);
+    
+                    hit(dealer);
+                    hit(dealer);
+                    
+                    state = State.PLAYERTURN;
+                    break;
+                case PLAYERTURN:
+                    System.out.println("Dealer:");
+                    printHand(dealer, true);
+                    System.out.println("Player:");
+                    printHand(player, false);
+                    System.out.print("Hit or Stand?[h/s]:");
+                    System.out.println("PlayerTurn State isn't working yet. Quiting out.");
+                    state = State.QUIT;
+                    break;
+                case DEALERTURN:
+                    System.out.println("DealerTurn State isn't working yet. Quiting out.");
+                    state = State.QUIT;
+                    break;
+                case LOSS:
+                    System.out.println("Loss State isn't working yet. Quiting out.");
+                    state = State.QUIT;
+                    break;
+                case PUSH:
+                    System.out.println("Push State isn't working yet. Quiting out.");
+                    state = State.QUIT;
+                    break;
+                case WIN:
+                    System.out.println("Win State isn't working yet. Quiting out.");
+                    state = State.QUIT;
+                    break;
+                case ATM:
+                    System.out.println("Atm State isn't isn't working yet. Quiting out.");
+                    state = State.QUIT;
+                    break;
+                case QUIT:
+                    break;
+            }
+            userInput.close();
         }
-        userInput.close();
     }
 
     public void printHand(ArrayList<Card> hand, boolean dealer) {
