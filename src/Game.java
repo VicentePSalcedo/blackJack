@@ -110,12 +110,24 @@ public class Game {
                         calculateHand(true, player);
                     }
                 } while (!choice.equals("s"));
-                state = State.QUIT;
+                state = State.DEALERTURN;
                 break;
             case DEALERTURN:
-                System.out.println("DealerTurn State isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
+                while(dealerScore < 17){
+                    hit(dealer);
+                    calculateHand(false, dealer);
+                }
+                if(dealerScore == playerScore){
+                    state = State.PUSH;
+                    break;
+                }
+                if(dealerScore > 21 || playerScore > dealerScore){
+                    state = State.WIN;
+                    break;
+                }else{
+                    state = State.LOSS;
+                    break;
+                }
             case LOSS:
                 System.out.println("Loss State isn't working yet. Quiting out.");
                 state = State.QUIT;
