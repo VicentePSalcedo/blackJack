@@ -94,11 +94,28 @@ public class Game {
             case PLAYERTURN:
                 System.out.println("Dealer:");
                 printHand(dealer, true);
+
                 System.out.println("Player:");
                 printHand(player, false);
-                System.out.print("Hit or Stand?[h/s]:");
-                System.out.println("PlayerTurn State isn't working yet. Quiting out.");
-                state = State.QUIT;
+                
+                String choice = "";
+                calculateHand(true, player);
+                System.out.println(playerScore);
+                System.out.print("Hit or Stand?[h/s]: ");
+                do {
+                    choice = userInput.next();
+                    if(choice.equals("h")){
+                        hit(player);
+                        System.out.println(player.get(player.size() - 1).rank + " of " + player.get(player.size() - 1).suit + " : " + player.get(player.size() - 1).rankInt);
+                        calculateHand(true, player);
+                        System.out.println(playerScore);
+                        if(playerScore > 21) {
+                            state = State.LOSS;
+                            break;
+                        }
+                    }
+                } while (!choice.equals("s"));
+                state = State.DEALERTURN;
                 break;
             case DEALERTURN:
                 System.out.println("DealerTurn State isn't working yet. Quiting out.");
@@ -121,9 +138,9 @@ public class Game {
                 state = State.QUIT;
                 break;
             case QUIT:
+                userInput.close();
                 break;
         }
-        userInput.close();
     }
 
     public void printHand(ArrayList<Card> hand, boolean dealer) {
@@ -133,7 +150,7 @@ public class Game {
             }
         }
         if (dealer == true) {
-            System.out.println(hand.get(0).rank + " of " + hand.get(0).suit);
+            System.out.println(hand.get(0).rank + " of " + hand.get(0).suit + " : " + hand.get(0).rankInt);
         }
     }
 
