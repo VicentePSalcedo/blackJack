@@ -47,14 +47,15 @@ public class Game {
             }else{
                 score += card.rankInt;
             }
-            if(score > 21){
-                for(Card aceCard : hand){
-                    if(aceCard.rank == Rank.Ace){
-                        score -= 10;
-                    }
-                    if(score <= 21){
-                        break;
-                    }
+            
+        }
+        if(score > 21){
+            for(Card aceCard : hand){
+                if(aceCard.rank == Rank.Ace){
+                    score -= 10;
+                }
+                if(score <= 21){
+                    break;
                 }
             }
         }
@@ -92,22 +93,27 @@ public class Game {
                 state = State.PLAYERTURN;
                 break;
             case PLAYERTURN:
-                calculateHand(true, player);
                 System.out.println("Dealer:");
                 printHand(dealer, true);
 
-                calculateHand(false, dealer);
                 System.out.println("Player:");
                 printHand(player, false);
                 
                 String choice = "";
-                System.out.print("Hit or Stand?[h/s]: ");
+                calculateHand(true, player);
                 System.out.println(playerScore);
+                System.out.print("Hit or Stand?[h/s]: ");
                 do {
                     choice = userInput.next();
                     if(choice.equals("h")){
                         hit(player);
+                        System.out.println(player.get(player.size() - 1).rank + " of " + player.get(player.size() - 1).suit + " : " + player.get(player.size() - 1).rankInt);
                         calculateHand(true, player);
+                        System.out.println(playerScore);
+                        if(playerScore > 21) {
+                            state = State.LOSS;
+                            break;
+                        }
                     }
                 } while (!choice.equals("s"));
                 state = State.QUIT;
