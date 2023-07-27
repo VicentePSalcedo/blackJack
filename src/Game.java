@@ -88,6 +88,9 @@ public class Game {
 
                 hit(dealer);
                 hit(dealer);
+                calculateHand(false, dealer);
+                calculateHand(true, player);
+
                 
                 state = State.PLAYERTURN;
                 break;
@@ -99,28 +102,27 @@ public class Game {
                 printHand(player, false);
                 
                 String choice = "";
-                calculateHand(true, player);
                 System.out.println(playerScore);
                 System.out.print("Hit or Stand?[h/s]: ");
                 do {
                     choice = userInput.next();
                     if(choice.equals("h")){
                         hit(player);
-                        System.out.println(player.get(player.size() - 1).rank + " of " + player.get(player.size() - 1).suit + " : " + player.get(player.size() - 1).rankInt);
                         calculateHand(true, player);
+                        System.out.println(player.get(player.size() - 1).rank + " of " + player.get(player.size() - 1).suit + " : " + player.get(player.size() - 1).rankInt);
                         System.out.println(playerScore);
                         if(playerScore > 21) {
                             state = State.LOSS;
                             break;
                         }
                     }
+                    state = State.DEALERTURN;
                 } while (!choice.equals("s"));
-                state = State.DEALERTURN;
                 break;
             case DEALERTURN:
-                while(dealerScore < 17){
-                    hit(dealer);
-                    calculateHand(false, dealer);
+            while(dealerScore < 17){
+                hit(dealer);
+                calculateHand(false, dealer);
                 }
                 if(dealerScore == playerScore){
                     state = State.PUSH;
