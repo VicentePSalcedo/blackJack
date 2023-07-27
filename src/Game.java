@@ -47,7 +47,6 @@ public class Game {
             }else{
                 score += card.rankInt;
             }
-            
         }
         if(score > 21){
             for(Card aceCard : hand){
