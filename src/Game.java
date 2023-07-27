@@ -92,19 +92,22 @@ public class Game {
                 state = State.PLAYERTURN;
                 break;
             case PLAYERTURN:
+                calculateHand(true, player);
                 System.out.println("Dealer:");
                 printHand(dealer, true);
 
+                calculateHand(false, dealer);
                 System.out.println("Player:");
                 printHand(player, false);
                 
                 String choice = "";
                 System.out.print("Hit or Stand?[h/s]: ");
+                System.out.println(playerScore);
                 do {
                     choice = userInput.next();
                     if(choice.equals("h")){
                         hit(player);
-                        //TODO calculate player hand and if they bust send to loss
+                        calculateHand(true, player);
                     }
                 } while (!choice.equals("s"));
                 state = State.QUIT;
@@ -142,7 +145,7 @@ public class Game {
             }
         }
         if (dealer == true) {
-            System.out.println(hand.get(0).rank + " of " + hand.get(0).suit);
+            System.out.println(hand.get(0).rank + " of " + hand.get(0).suit + " : " + hand.get(0).rankInt);
         }
     }
 
