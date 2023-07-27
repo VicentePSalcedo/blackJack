@@ -115,7 +115,7 @@ public class Game {
                         }
                     }
                 } while (!choice.equals("s"));
-                state = State.QUIT;
+                state = State.DEALERTURN;
                 break;
             case DEALERTURN:
                 System.out.println("DealerTurn State isn't working yet. Quiting out.");
