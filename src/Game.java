@@ -57,13 +57,13 @@ public class Game {
                     }
                 }
             }
-            if(isPlayer){
-                playerScore = score;
-                return;
-            }
-            dealerScore = score;
         }
-
+        if(isPlayer){
+            playerScore = score;
+            return;
+        }
+        dealerScore = score;
+            
     }
 
     //the game engine
