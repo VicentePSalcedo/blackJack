@@ -47,14 +47,14 @@ public class Game {
             }else{
                 score += card.rankInt;
             }
-            if(score > 21){
-                for(Card aceCard : hand){
-                    if(aceCard.rank == Rank.Ace){
-                        score -= 10;
-                    }
-                    if(score <= 21){
-                        break;
-                    }
+        }
+        if(score > 21){
+            for(Card aceCard : hand){
+                if(aceCard.rank == Rank.Ace){
+                    score -= 10;
+                }
+                if(score <= 21){
+                    break;
                 }
             }
         }
