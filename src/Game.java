@@ -88,6 +88,9 @@ public class Game {
 
                 hit(dealer);
                 hit(dealer);
+                calculateHand(false, dealer);
+                calculateHand(true, player);
+
                 
                 state = State.PLAYERTURN;
                 break;
@@ -99,28 +102,39 @@ public class Game {
                 printHand(player, false);
                 
                 String choice = "";
-                calculateHand(true, player);
                 System.out.println(playerScore);
                 System.out.print("Hit or Stand?[h/s]: ");
                 do {
                     choice = userInput.next();
                     if(choice.equals("h")){
                         hit(player);
-                        System.out.println(player.get(player.size() - 1).rank + " of " + player.get(player.size() - 1).suit + " : " + player.get(player.size() - 1).rankInt);
                         calculateHand(true, player);
+                        System.out.println(player.get(player.size() - 1).rank + " of " + player.get(player.size() - 1).suit + " : " + player.get(player.size() - 1).rankInt);
                         System.out.println(playerScore);
                         if(playerScore > 21) {
                             state = State.LOSS;
                             break;
                         }
                     }
+                    state = State.DEALERTURN;
                 } while (!choice.equals("s"));
-                state = State.DEALERTURN;
                 break;
             case DEALERTURN:
-                System.out.println("DealerTurn State isn't working yet. Quiting out.");
-                state = State.QUIT;
-                break;
+            while(dealerScore < 17){
+                hit(dealer);
+                calculateHand(false, dealer);
+                }
+                if(dealerScore == playerScore){
+                    state = State.PUSH;
+                    break;
+                }
+                if(dealerScore > 21 || playerScore > dealerScore){
+                    state = State.WIN;
+                    break;
+                }else{
+                    state = State.LOSS;
+                    break;
+                }
             case LOSS:
                 System.out.println("Loss State isn't working yet. Quiting out.");
                 state = State.QUIT;
