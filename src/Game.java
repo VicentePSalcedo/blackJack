@@ -54,15 +54,17 @@ public class Game {
                 state = State.DEALING;
                 break;
             case DEALING:
+                player.clear();
+                dealer.clear();
+
                 hit(player);
                 hit(player);
 
                 hit(dealer);
                 hit(dealer);
+
                 calculateHand(false, dealer);
                 calculateHand(true, player);
-
-                
                 state = State.PLAYERTURN;
                 break;
             case PLAYERTURN:
@@ -107,8 +109,21 @@ public class Game {
                     break;
                 }
             case LOSS:
-                System.out.println("Loss State isn't working yet. Quiting out.");
-                state = State.QUIT;
+                bankRoll -= bet;
+                if (bankRoll <= 0){
+                    state = State.ATM;
+                } else {
+                    System.out.print("Would you like to wager again?[y/n]:");
+                    do {
+                        choice = userInput.next();
+                        if(choice.equals("y")){
+                            state = State.WAGERING;
+                        }
+                        if (choice.equals("n")){
+                            state = State.QUIT;
+                        }
+                    } while (!choice.equals("y") && !choice.equals("n"));
+                }
                 break;
             case PUSH:
                 System.out.println("Push State isn't working yet. Quiting out.");
