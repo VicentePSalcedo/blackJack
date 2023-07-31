@@ -83,7 +83,7 @@ public class Game {
                         hit(player);
                         calculateHand(true, player);
                         System.out.println(player.get(player.size() - 1).rank + " of " + player.get(player.size() - 1).suit + " : " + player.get(player.size() - 1).rankInt);
-                        System.out.println(playerScore);
+                        System.out.println("Current Score: " + playerScore);
                         if(playerScore > 21) {
                             state = State.LOSS;
                             break;
@@ -97,6 +97,8 @@ public class Game {
                 hit(dealer);
                 calculateHand(false, dealer);
                 }
+                printHand(dealer, false);
+                System.out.println("Dealer Score: " + dealerScore);
                 if(dealerScore == playerScore){
                     state = State.PUSH;
                     break;
@@ -113,39 +115,22 @@ public class Game {
                 if (bankRoll <= 0){
                     state = State.ATM;
                 } else {
-                    System.out.print("Would you like to wager again?[y/n]:");
-                    do {
-                        choice = userInput.next();
-                        if(choice.equals("y")){
-                            state = State.WAGERING;
-                        }
-                        if (choice.equals("n")){
-                            state = State.QUIT;
-                        }
-                    } while (!choice.equals("y") && !choice.equals("n"));
+                    state = playAgainPrompt(userInput);
                 }
                 break;
             case PUSH:
-                System.out.println("Push State isn't working yet. Quiting out.");
-                state = State.QUIT;
+                System.out.println("It's a tie.");
+                state = playAgainPrompt(userInput);
                 break;
             case WIN:
-                System.out.print("You win!");
                 if(playerScore == 21){
+                    System.out.println("You win! Black Jack!");
                     bankRoll = (int) (bankRoll + (bet * 1.5));
                 } else {
+                    System.out.println("You win!");
                     bankRoll += bet;
                 }
-                System.out.print("Would you like to wager again?[y/n]:");
-                do {
-                    choice = userInput.next();
-                    if(choice.equals("y")){
-                        state = State.WAGERING;
-                    }
-                    if (choice.equals("n")){
-                        state = State.QUIT;
-                    }
-                } while (!choice.equals("y") && !choice.equals("n"));
+                state = playAgainPrompt(userInput);
                 break;
             case ATM:
                 System.out.println("Atm State isn't isn't working yet. Quiting out.");
@@ -155,6 +140,17 @@ public class Game {
                 userInput.close();
                 break;
         }
+    }
+    public State playAgainPrompt(Scanner userInput){
+        String choice;
+        System.out.print("Would you like to wager again?[y/n]:");
+        do {
+            choice = userInput.next();
+            if (choice.equals("n")){
+                return State.QUIT;
+            }
+        } while (!choice.equals("y") && !choice.equals("n"));
+        return State.WAGERING;
     }
 
     public void calculateHand(boolean isPlayer, ArrayList<Card> hand){
