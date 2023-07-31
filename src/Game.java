@@ -65,6 +65,8 @@ public class Game {
 
                 calculateHand(false, dealer);
                 calculateHand(true, player);
+
+                
                 state = State.PLAYERTURN;
                 break;
             case PLAYERTURN:
