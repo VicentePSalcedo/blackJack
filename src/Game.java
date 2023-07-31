@@ -130,8 +130,22 @@ public class Game {
                 state = State.QUIT;
                 break;
             case WIN:
-                System.out.println("Win State isn't working yet. Quiting out.");
-                state = State.QUIT;
+                System.out.print("You win!");
+                if(playerScore == 21){
+                    bankRoll = (int) (bankRoll + (bet * 1.5));
+                } else {
+                    bankRoll += bet;
+                }
+                System.out.print("Would you like to wager again?[y/n]:");
+                do {
+                    choice = userInput.next();
+                    if(choice.equals("y")){
+                        state = State.WAGERING;
+                    }
+                    if (choice.equals("n")){
+                        state = State.QUIT;
+                    }
+                } while (!choice.equals("y") && !choice.equals("n"));
                 break;
             case ATM:
                 System.out.println("Atm State isn't isn't working yet. Quiting out.");
