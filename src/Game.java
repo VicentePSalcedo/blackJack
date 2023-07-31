@@ -37,35 +37,6 @@ public class Game {
         this.state = State.WAGERING;
     }
 
-    public void calculateHand(boolean isPlayer, ArrayList<Card> hand){
-        int score = 0;
-        for(Card card : hand){
-            if(card.rank == Rank.Queen || card.rank == Rank.King || card.rank == Rank.Jack){
-                score += 10;
-            }else if(card.rank == Rank.Ace){
-                score += 11;
-            }else{
-                score += card.rankInt;
-            }
-        }
-        if(score > 21){
-            for(Card aceCard : hand){
-                if(aceCard.rank == Rank.Ace){
-                    score -= 10;
-                }
-                if(score <= 21){
-                    break;
-                }
-            }
-        }
-        if(isPlayer){
-            playerScore = score;
-            return;
-        }
-        dealerScore = score;
-            
-    }
-
     //the game engine
     public void run() {
         Scanner userInput = new Scanner(System.in);
@@ -155,6 +126,35 @@ public class Game {
                 userInput.close();
                 break;
         }
+    }
+
+    public void calculateHand(boolean isPlayer, ArrayList<Card> hand){
+        int score = 0;
+        for(Card card : hand){
+            if(card.rank == Rank.Queen || card.rank == Rank.King || card.rank == Rank.Jack){
+                score += 10;
+            }else if(card.rank == Rank.Ace){
+                score += 11;
+            }else{
+                score += card.rankInt;
+            }
+        }
+        if(score > 21){
+            for(Card aceCard : hand){
+                if(aceCard.rank == Rank.Ace){
+                    score -= 10;
+                }
+                if(score <= 21){
+                    break;
+                }
+            }
+        }
+        if(isPlayer){
+            playerScore = score;
+            return;
+        }
+        dealerScore = score;
+            
     }
 
     public void printHand(ArrayList<Card> hand, boolean dealer) {
