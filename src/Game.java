@@ -34,7 +34,7 @@ public class Game {
         this.dealer = new ArrayList<Card>();
         this.bankRoll = 5000;
         this.bet = 0;
-        this.state = State.WAGERING;
+        this.state = State.ATM;
     }
 
     //the game engine
@@ -44,7 +44,7 @@ public class Game {
             switch (state) {
                 case WAGERING:
                     do {
-                        System.out.print("How much would you like to wager?[$10 - $" + bankRoll + "]\n\t$");
+                        System.out.print("How much would you like to wager?[$10 - $" + bankRoll + "]\n$");
                         while (!userInput.hasNextInt()) {
                             System.out.println("Please enter a positive integer less than $" + bankRoll);
                             userInput.next();
@@ -116,7 +116,8 @@ public class Game {
                 case LOSS:
                     bankRoll -= bet;
                     if (bankRoll <= 0) {
-                        state = State.ATM;
+                        System.out.print("You're out of cash for now. ");
+                        state = State.QUIT;
                     } else {
                         state = playAgainPrompt(userInput);
                     }
@@ -136,8 +137,16 @@ public class Game {
                     state = playAgainPrompt(userInput);
                     break;
                 case ATM:
-                    System.out.println("Atm State isn't isn't working yet. Quiting out.");
-                    state = State.QUIT;
+                    do {
+                        System.out.println("How much are you betting with today?\n$");
+                        while (!userInput.hasNextInt()) {
+                            System.out.println("Please enter a positive integer less than $10,000 and a multiple of 10");
+                            userInput.next();
+                        }
+                        bankRoll = userInput.nextInt();
+                    } while ((bankRoll < 10 || bankRoll > 10000) || (bankRoll % 10) != 0);
+                    System.out.println("You total Funds: $" + bankRoll + ".");
+                    state = State.WAGERING;
                     break;
                 case QUIT:
                     userInput.close();
