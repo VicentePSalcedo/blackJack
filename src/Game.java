@@ -41,6 +41,18 @@ public class Game {
     public void run() {
         Scanner userInput = new Scanner(System.in);
         while(!IsComplete()){
+            if (shoe.topOfDeck < 260){
+                System.out.println("5 of 6 decks remaining.");
+            } else if (shoe.topOfDeck < 208) {
+                System.out.println("4 of 6 decks remaining.");
+            } else if (shoe.topOfDeck < 156) {
+                System.out.println("3 of 6 decks remaining.");
+            } else if (shoe.topOfDeck < 104) {
+                System.out.println("2 of 6 decks remaining. Shuffeling soon");
+            } else if (shoe.topOfDeck < 52) {
+                System.out.println("Shuffling.");
+                shoe.shuffle();
+            }
             switch (state) {
                 case WAGERING:
                     do {
