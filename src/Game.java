@@ -39,12 +39,12 @@ public class Game {
 
     //the game engine
     public void run() {
+        Scanner userInput = new Scanner(System.in);
         while(!IsComplete()){
-            Scanner userInput = new Scanner(System.in);
             switch (state) {
                 case WAGERING:
                     do {
-                        System.out.print("How much would you like to wager?[$10 - $" + bankRoll + "]\n$");
+                        System.out.print("\nHow much would you like to wager?[$10 - $" + bankRoll + "]\n$");
                         while (!userInput.hasNextInt()) {
                             System.out.println("Please enter a positive integer less than $" + bankRoll);
                             userInput.next();
@@ -69,7 +69,7 @@ public class Game {
                     state = State.PLAYERTURN;
                     break;
                 case PLAYERTURN:
-                    System.out.println("Dealer:");
+                    System.out.println("\nDealer:");
                     printHand(dealer, true);
 
                     System.out.println("Player:");
@@ -101,7 +101,7 @@ public class Game {
                         calculateHand(false, dealer);
                     }
                     printHand(dealer, false);
-                    System.out.println("Dealer Score: " + dealerScore);
+                    System.out.println("\nDealer Score: " + dealerScore);
                     if (dealerScore == playerScore) {
                         state = State.PUSH;
                         break;
@@ -114,21 +114,22 @@ public class Game {
                         break;
                     }
                 case LOSS:
+                    System.out.println("\nYou lost.");
                     bankRoll -= bet;
                     if (bankRoll <= 0) {
-                        System.out.print("You're out of cash for now. ");
+                        System.out.print("\nYou're out of cash for now. ");
                         state = State.QUIT;
                     } else {
                         state = playAgainPrompt(userInput);
                     }
                     break;
                 case PUSH:
-                    System.out.println("It's a tie.");
+                    System.out.println("\nIt's a tie.");
                     state = playAgainPrompt(userInput);
                     break;
                 case WIN:
                     if (playerScore == 21) {
-                        System.out.println("You win! Black Jack!");
+                        System.out.println("\nYou win! Black Jack!");
                         bankRoll = (int) (bankRoll + (bet * 1.5));
                     } else {
                         System.out.println("You win!");
@@ -138,14 +139,14 @@ public class Game {
                     break;
                 case ATM:
                     do {
-                        System.out.println("How much are you betting with today?\n$");
+                        System.out.print("How much are you betting with today?\n$");
                         while (!userInput.hasNextInt()) {
                             System.out.println("Please enter a positive integer less than $10,000 and a multiple of 10");
                             userInput.next();
                         }
                         bankRoll = userInput.nextInt();
                     } while ((bankRoll < 10 || bankRoll > 10000) || (bankRoll % 10) != 0);
-                    System.out.println("You total Funds: $" + bankRoll + ".");
+                    System.out.println("\nYou total Funds: $" + bankRoll + ".");
                     state = State.WAGERING;
                     break;
                 case QUIT:
